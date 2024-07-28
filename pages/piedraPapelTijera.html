@@ -50,17 +50,33 @@
         </div>
     </div>
 
-    <h2 class="h2-maquina">La máquina elige:</h2>
+    <h2 class="h2-maquina" id="nombre-rival"></h2>
 
-    <div class="contenedor">
-        <div class="contenedor__objeto" id="piedra-maquina">
-            <img src="../img/piedra.png" alt="Piedra">
+    <div class="contenedor-general">
+        <div class="contenedor">
+            <div class="contenedor__objeto" id="piedra-maquina">
+                <img src="../img/piedra.png" alt="Piedra">
+            </div>
+            <div class="contenedor__objeto" id="papel-maquina">
+                <img src="../img/papel.png" alt="Papel">
+            </div>
+            <div class="contenedor__objeto" id="tijera-maquina">
+                <img src="../img/tijera.png" alt="Tijera">
+            </div>
         </div>
-        <div class="contenedor__objeto" id="papel-maquina">
-            <img src="../img/papel.png" alt="Papel">
-        </div>
-        <div class="contenedor__objeto" id="tijera-maquina">
-            <img src="../img/tijera.png" alt="Tijera">
+        <div class="contenedor-datos-usuario">
+            <div class="datos-usuario resultado-oculto" id="datosDeUsuario">
+                <h4>Rival:</h4>
+                <p id="nombreUsuario">Nombre</p>
+                <p id="apellidoUsuario">Apellido</p>
+                <p id="edadUsuario">Edad</p>
+                <p id="paisUsuario">País</p>
+                <img id="imagenUsuario" src="" alt="Imagen de usuario">
+            </div>
+        
+            <div class="cargando" id="loadingDeUsuario">
+                <p>Cargando...</p>
+            </div>
         </div>
     </div>
 
@@ -73,12 +89,18 @@
     <div class="contenedor-resultados">
         <h4>Resultados</h4>
         <div class="contenedor-resultados-conBoton">
-        <p class="estilo-resultado">Ganadas: <span id="contador-ganado">0</span> </p>
-        <p class="estilo-resultado">Perdidas: <span id="contador-perdido">0</span> </p>
-        <p class="estilo-resultado">Empatadas: <span id="contador-empatado">0</span> </p>
-        <button id="reset">reset</button>
+            <p class="estilo-resultado">Ganadas: <span id="contador-ganado">0</span> </p>
+            <p class="estilo-resultado">Perdidas: <span id="contador-perdido">0</span> </p>
+            <p class="estilo-resultado">Empatadas: <span id="contador-empatado">0</span> </p>
+            <button id="reset">reset</button>
+        </div>
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
     </div>
-    </div>
+
+
+
+    
+
 
     <!--FOOTER-->
 
@@ -103,8 +125,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <!-- Chart.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
     <!-- MY JS -->
     <script src="../js/script.js"></script>
+
+    </script>
 </body>
 
 </html>

@@ -8,6 +8,10 @@ let ganadas;
 let perdidas;
 let empatadas;
 
+/*LLAMO A LA FUNCIÓN PARA OBTENER DATOS DE USUARIO*/
+obtenerDatos();
+
+
 if (localStorage.getItem("ganadas")){
     ganadas = localStorage.getItem("ganadas");
     document.getElementById("contador-ganado").textContent = ganadas;
@@ -29,6 +33,8 @@ if (localStorage.getItem("empatadas")){
     empatadas = 0;
 }
 
+grafico();
+
 /*FUNCIONES DE GANAR, PERDER Y EMPATAR*/
 function empate(){
     document.getElementById("mensaje-empate").classList.remove("resultado-oculto");
@@ -36,6 +42,7 @@ function empate(){
     document.getElementById("mensaje-ganaste").classList.add("resultado-oculto");
     
     empatadas++;
+    grafico();
     localStorage.setItem("empatadas", empatadas);
     document.getElementById("contador-empatado").textContent = empatadas;
 }
@@ -46,6 +53,7 @@ function ganar (){
     document.getElementById("mensaje-empate").classList.add("resultado-oculto");
 
     ganadas++;
+    grafico();
     localStorage.setItem("ganadas", ganadas);
     document.getElementById("contador-ganado").textContent = ganadas;
 }
@@ -56,6 +64,7 @@ function perder (){
     document.getElementById("mensaje-ganaste").classList.add("resultado-oculto");
 
     perdidas++;
+    grafico();
     localStorage.setItem("perdidas", perdidas);
     document.getElementById("contador-perdido").textContent = perdidas;
 }
@@ -147,7 +156,64 @@ function reset () {
     document.getElementById("contador-ganado").textContent = 0;
     document.getElementById("contador-perdido").textContent = 0;
     document.getElementById("contador-empatado").textContent = 0;
+    grafico();
+    obtenerDatos ();
+    document.getElementById("papel-maquina").classList.remove("contenedor__objeto-seleccionado");
+    document.getElementById("tijera-maquina").classList.remove("contenedor__objeto-seleccionado");
+    document.getElementById("piedra-maquina").classList.remove("contenedor__objeto-seleccionado");
+    document.getElementById("mensaje-ganaste").classList.add("resultado-oculto");
+    document.getElementById("mensaje-perdiste").classList.add("resultado-oculto");
+    document.getElementById("mensaje-empate").classList.add("resultado-oculto");
+
 }
+
+/*CARGA DE API Y MANEJO DE PROMESA*/
+function obtenerDatos () {
+    fetch("https://randomuser.me/api/")
+    .then((respuesta) => respuesta.json())
+    .then((data) => {
+        console.log(data);
+        document.getElementById("datosDeUsuario").classList.remove("resultado-oculto");
+        document.getElementById("loadingDeUsuario").classList.add("resultado-oculto");
+        document.getElementById("nombreUsuario").textContent = data.results[0].name.first;
+        document.getElementById("apellidoUsuario").textContent = data.results[0].name.last;
+        document.getElementById("edadUsuario").textContent = data.results[0].dob.age;
+        document.getElementById("paisUsuario").textContent = data.results[0].location.country;
+        document.getElementById("imagenUsuario").setAttribute("src", data.results[0].picture.thumbnail);
+        document.getElementById("nombre-rival").textContent = data.results[0].name.first + " " + data.results[0].name.last + " elige:"
+    })
+}
+
+/*LIBRERIA*/
+
+function grafico () {
+    var xValues = ["Ganadas", "Perdidas", "Empatadas"];
+    var yValues = [ganadas, perdidas, empatadas];
+    var barColors = [
+        "#A8C57D",
+        "#194DAD",
+        "#6438B0"
+    ];
+    
+    new Chart("myChart", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+        }
+      }
+    });
+}
+
+
+
 
 
 
